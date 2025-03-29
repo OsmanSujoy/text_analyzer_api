@@ -55,7 +55,8 @@ export const deleteTextController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const result = await deleteText(id);
-    res.status(200).json(result);
+    if (!result) return res.status(404).json({ error: 'Text not found' });
+    res.status(200).json({ message: 'Text entry deleted successfully' });
   } catch (error) {
     logger.error('Error deleting text entry:', error);
     res.status(500).json({ error: 'Error deleting text entry' });
