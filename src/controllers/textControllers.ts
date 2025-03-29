@@ -7,8 +7,12 @@ import {
 } from '../services/textServices';
 import { analyzeText } from '../utils/analyzer';
 import logger from '../utils/logger';
+import { TextCreateInput, TextWhereUniqueInput } from '../dto/textDto';
 
-export const createTextController = async (req: Request, res: Response) => {
+export const createTextController = async (
+  req: Request<never, never, TextCreateInput>,
+  res: Response,
+) => {
   try {
     const { content } = req.body;
     const result = await createText(content);
@@ -32,9 +36,12 @@ export const getTextController = async (req: Request, res: Response) => {
   }
 };
 
-export const updateTextController = async (req: Request, res: Response) => {
+export const updateTextController = async (
+  req: Request<never, never, TextCreateInput>,
+  res: Response,
+) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as TextWhereUniqueInput;
     const { content } = req.body;
     const result = await updateText(id, content);
     res.status(200).json(result);

@@ -1,4 +1,5 @@
 import express from 'express';
+import validatingRequest from '../middleware/validateRequest';
 import {
   createTextController,
   getTextController,
@@ -10,6 +11,7 @@ import {
   getParagraphCount,
   getLongestWord,
 } from '../controllers/textControllers';
+import { createTextSchema, getTextByIdSchema, updateTextSchema } from '../dto/textDto';
 
 const router = express.Router();
 
@@ -35,7 +37,7 @@ const router = express.Router();
  *       500:
  *         description: Server error
  */
-router.post('/', createTextController);
+router.post('/', validatingRequest(createTextSchema), createTextController);
 
 /**
  * @swagger
@@ -54,7 +56,11 @@ router.post('/', createTextController);
  *       404:
  *         description: Text not found
  */
-router.get('/:id', getTextController);
+router.get(
+  '/:id',
+  validatingRequest(getTextByIdSchema),
+  getTextController,
+);
 
 /**
  * @swagger
@@ -83,7 +89,11 @@ router.get('/:id', getTextController);
  *       404:
  *         description: Text not found
  */
-router.put('/:id', updateTextController);
+router.put(
+  '/:id',
+  validatingRequest(updateTextSchema),
+  updateTextController,
+);
 
 /**
  * @swagger
@@ -102,7 +112,11 @@ router.put('/:id', updateTextController);
  *       404:
  *         description: Text not found
  */
-router.delete('/:id', deleteTextController);
+router.delete(
+  '/:id',
+  validatingRequest(getTextByIdSchema),
+  deleteTextController,
+);
 
 /**
  * @swagger
@@ -119,7 +133,11 @@ router.delete('/:id', deleteTextController);
  *       200:
  *         description: Word count retrieved successfully
  */
-router.get('/:id/word-count', getWordCount);
+router.get(
+  '/:id/word-count',
+  validatingRequest(getTextByIdSchema),
+  getWordCount,
+);
 
 /**
  * @swagger
@@ -136,7 +154,11 @@ router.get('/:id/word-count', getWordCount);
  *       200:
  *         description: Character count retrieved successfully
  */
-router.get('/:id/character-count', getCharacterCount);
+router.get(
+  '/:id/character-count',
+  validatingRequest(getTextByIdSchema),
+  getCharacterCount,
+);
 
 /**
  * @swagger
@@ -153,7 +175,11 @@ router.get('/:id/character-count', getCharacterCount);
  *       200:
  *         description: Sentence count retrieved successfully
  */
-router.get('/:id/sentence-count', getSentenceCount);
+router.get(
+  '/:id/sentence-count',
+  validatingRequest(getTextByIdSchema),
+  getSentenceCount,
+);
 
 /**
  * @swagger
@@ -170,7 +196,11 @@ router.get('/:id/sentence-count', getSentenceCount);
  *       200:
  *         description: Paragraph count retrieved successfully
  */
-router.get('/:id/paragraph-count', getParagraphCount);
+router.get(
+  '/:id/paragraph-count',
+  validatingRequest(getTextByIdSchema),
+  getParagraphCount,
+);
 
 /**
  * @swagger
@@ -187,6 +217,10 @@ router.get('/:id/paragraph-count', getParagraphCount);
  *       200:
  *         description: Longest word retrieved successfully
  */
-router.get('/:id/longest-word', getLongestWord);
+router.get(
+  '/:id/longest-word',
+  validatingRequest(getTextByIdSchema),
+  getLongestWord,
+);
 
 export { router as textRoutes };

@@ -4,5 +4,6 @@ module.exports = {
     verbose: true,
     detectOpenHandles: true,
     forceExit: true,
+    testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   };
   
