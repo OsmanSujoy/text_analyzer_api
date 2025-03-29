@@ -54,3 +54,36 @@ export const deleteTextController = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error deleting text entry' });
   }
 };
+
+const handleAnalysisRequest = async (
+  req: Request,
+  res: Response,
+  analysisKey: string,
+  responseKey: string,
+) => {
+  try {
+    const { id } = req.params;
+    const result = await getTextById(id);
+    if (!result) return res.status(404).json({ error: 'Text not found' });
+    const analysis = analyzeText(result.content);
+    res.status(200).json({ ...result, [responseKey]: analysis[analysisKey] });
+  } catch (error) {
+    logger.error(`Error retrieving ${responseKey} entry:`, error);
+    res.status(500).json({ error: 'Error retrieving text entry' });
+  }
+};
+
+export const getWordCount = (req: Request, res: Response) =>
+  handleAnalysisRequest(req, res, 'wordCount', 'wordCount');
+
+export const getCharacterCount = (req: Request, res: Response) =>
+  handleAnalysisRequest(req, res, 'characterCount', 'characterCount');
+
+export const getSentenceCount = (req: Request, res: Response) =>
+  handleAnalysisRequest(req, res, 'sentenceCount', 'sentenceCount');
+
+export const getParagraphCount = (req: Request, res: Response) =>
+  handleAnalysisRequest(req, res, 'paragraphCount', 'paragraphCount');
+
+export const getLongestWord = (req: Request, res: Response) =>
+  handleAnalysisRequest(req, res, 'longestWords', 'longestWords');

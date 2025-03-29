@@ -4,6 +4,11 @@ import {
   getTextController,
   updateTextController,
   deleteTextController,
+  getWordCount,
+  getCharacterCount,
+  getSentenceCount,
+  getParagraphCount,
+  getLongestWord,
 } from '../controllers/textControllers';
 
 const router = express.Router();
@@ -98,5 +103,90 @@ router.put('/:id', updateTextController);
  *         description: Text not found
  */
 router.delete('/:id', deleteTextController);
+
+/**
+ * @swagger
+ * /api/text/{id}/word-count:
+ *   get:
+ *     summary: Get word count
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Word count retrieved successfully
+ */
+router.get('/:id/word-count', getWordCount);
+
+/**
+ * @swagger
+ * /api/text/{id}/character-count:
+ *   get:
+ *     summary: Get character count
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Character count retrieved successfully
+ */
+router.get('/:id/character-count', getCharacterCount);
+
+/**
+ * @swagger
+ * /api/text/{id}/sentence-count:
+ *   get:
+ *     summary: Get sentence count
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Sentence count retrieved successfully
+ */
+router.get('/:id/sentence-count', getSentenceCount);
+
+/**
+ * @swagger
+ * /api/text/{id}/paragraph-count:
+ *   get:
+ *     summary: Get paragraph count
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Paragraph count retrieved successfully
+ */
+router.get('/:id/paragraph-count', getParagraphCount);
+
+/**
+ * @swagger
+ * /api/text/{id}/longest-word:
+ *   get:
+ *     summary: Get longest word in paragraph
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Longest word retrieved successfully
+ */
+router.get('/:id/longest-word', getLongestWord);
 
 export { router as textRoutes };

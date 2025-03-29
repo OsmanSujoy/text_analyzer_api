@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { prisma } from '../config/database';
 
 export const createText = async (content: string) => {
-  console.log('Creating text entry with content:', content);
   const textEntry = await prisma.text.create({ data: { content } });
   return textEntry;
 };
