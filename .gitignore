@@ -1,4 +1,6 @@
-node_modules
-# Keep environment variables out of version control
-dist
-coverage
+# Ignore build output
+dist/
+coverage/
+
+# Ignore node_modules
+node_modules/

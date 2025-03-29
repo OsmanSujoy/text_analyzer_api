@@ -11,7 +11,11 @@ import {
   getParagraphCount,
   getLongestWord,
 } from '../controllers/textControllers';
-import { createTextSchema, getTextByIdSchema, updateTextSchema } from '../dto/textDto';
+import {
+  createTextSchema,
+  getTextByIdSchema,
+  updateTextSchema,
+} from '../dto/textDto';
 
 const router = express.Router();
 
@@ -56,11 +60,7 @@ router.post('/', validatingRequest(createTextSchema), createTextController);
  *       404:
  *         description: Text not found
  */
-router.get(
-  '/:id',
-  validatingRequest(getTextByIdSchema),
-  getTextController,
-);
+router.get('/:id', validatingRequest(getTextByIdSchema), getTextController);
 
 /**
  * @swagger
@@ -89,11 +89,7 @@ router.get(
  *       404:
  *         description: Text not found
  */
-router.put(
-  '/:id',
-  validatingRequest(updateTextSchema),
-  updateTextController,
-);
+router.put('/:id', validatingRequest(updateTextSchema), updateTextController);
 
 /**
  * @swagger
